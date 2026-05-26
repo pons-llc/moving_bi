@@ -424,7 +424,9 @@ body{font-family:'Hiragino Kaku Gothic ProN','Meiryo','Yu Gothic',sans-serif;ove
 #map{width:100vw;height:100vh}
 #flow-canvas{position:absolute;top:0;left:0;pointer-events:none;z-index:1}
 #controls{position:absolute;top:14px;left:14px;background:rgba(255,255,255,.96);border-radius:12px;padding:15px 16px;min-width:235px;box-shadow:0 2px 14px rgba(0,0,0,.15);z-index:10}
-#title{font-size:14px;font-weight:bold;color:#1a1a2e;margin-bottom:12px;line-height:1.5;border-bottom:1px solid #eee;padding-bottom:9px}
+#title{font-size:14px;font-weight:bold;color:#1a1a2e;margin-bottom:0;line-height:1.5;border-bottom:1px solid #eee;padding-bottom:9px;display:flex;justify-content:space-between;align-items:flex-start;cursor:pointer;user-select:none}
+#ctrl-body{margin-top:12px}
+.chev{font-size:12px;color:#aaa;flex-shrink:0;margin-left:8px;margin-top:2px}
 .cg{margin-bottom:10px}
 .cl{font-size:10px;color:#888;font-weight:bold;text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px}
 select#ps{width:100%;padding:6px 9px;border:1.5px solid #ddd;border-radius:7px;font-size:13px;background:#fff;cursor:pointer;outline:none}
@@ -441,7 +443,8 @@ select#ps:focus{border-color:#5b80c4}
 .so{color:#C62828;font-weight:bold;font-size:13px}
 .sn{font-weight:bold;font-size:13px}
 #legend{position:absolute;bottom:36px;right:14px;background:rgba(255,255,255,.95);border-radius:10px;padding:11px 14px;font-size:11px;box-shadow:0 2px 8px rgba(0,0,0,.12);z-index:10;min-width:170px}
-.lt{font-weight:bold;color:#333;margin-bottom:7px;font-size:12px}
+.lt{font-weight:bold;color:#333;margin-bottom:0;font-size:12px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none}
+#leg-body{margin-top:7px}
 .li{display:flex;align-items:center;margin-bottom:5px;gap:7px;color:#444}
 .ll{height:3px;border-radius:2px}
 .ld{width:8px;height:8px;border-radius:50%;flex-shrink:0}
@@ -452,59 +455,69 @@ select#ps:focus{border-color:#5b80c4}
 <div id="map"></div>
 <canvas id="flow-canvas"></canvas>
 <div id="controls">
-  <div id="title">都道府県間<br>転出・転入フローマップ</div>
-  <div class="cg">
-    <div class="cl">都道府県</div>
-    <select id="ps"></select>
+  <div id="title" onclick="toggleCtrl()">
+    <span>都道府県間<br>転出・転入フローマップ</span>
+    <span class="chev" id="ctrl-chevron">▲</span>
   </div>
-  <div class="cg">
-    <div class="cl">年度</div>
-    <div class="yb-wrap">
-      <button class="yb on" data-y="all">全期間</button>
-      <button class="yb" data-y="2020">2020</button>
-      <button class="yb" data-y="2021">2021</button>
-      <button class="yb" data-y="2022">2022</button>
-      <button class="yb" data-y="2023">2023</button>
+  <div id="ctrl-body">
+    <div class="cg">
+      <div class="cl">都道府県</div>
+      <select id="ps"></select>
     </div>
-  </div>
-  <div class="cg">
-    <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:#333">
-      <input type="checkbox" id="ex-tokyo" style="width:15px;height:15px;cursor:pointer;accent-color:#1a1a2e">
-      東京都を除外する
-    </label>
-  </div>
-  <div id="stats">
-    <div class="sr"><span class="sl">転入合計</span><span class="si" id="si">-</span></div>
-    <div class="sr"><span class="sl">転出合計</span><span class="so" id="so">-</span></div>
-    <div class="sr"><span class="sl">転入超過数</span><span class="sn" id="sn">-</span></div>
-  </div>
-  <div class="cg" style="margin-top:12px;padding-top:10px;border-top:1px solid #eee">
-    <div class="cl" style="color:#1565C0">転入超過 上位</div>
-    <div id="rank-in"></div>
-  </div>
-  <div class="cg">
-    <div class="cl" style="color:#C62828">転出超過 上位</div>
-    <div id="rank-out"></div>
+    <div class="cg">
+      <div class="cl">年度</div>
+      <div class="yb-wrap">
+        <button class="yb on" data-y="all">全期間</button>
+        <button class="yb" data-y="2020">2020</button>
+        <button class="yb" data-y="2021">2021</button>
+        <button class="yb" data-y="2022">2022</button>
+        <button class="yb" data-y="2023">2023</button>
+      </div>
+    </div>
+    <div class="cg">
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:#333">
+        <input type="checkbox" id="ex-tokyo" style="width:15px;height:15px;cursor:pointer;accent-color:#1a1a2e">
+        東京都を除外する
+      </label>
+    </div>
+    <div id="stats">
+      <div class="sr"><span class="sl">転入合計</span><span class="si" id="si">-</span></div>
+      <div class="sr"><span class="sl">転出合計</span><span class="so" id="so">-</span></div>
+      <div class="sr"><span class="sl">転入超過数</span><span class="sn" id="sn">-</span></div>
+    </div>
+    <div class="cg" style="margin-top:12px;padding-top:10px;border-top:1px solid #eee">
+      <div class="cl" style="color:#1565C0">転入超過 上位</div>
+      <div id="rank-in"></div>
+    </div>
+    <div class="cg">
+      <div class="cl" style="color:#C62828">転出超過 上位</div>
+      <div id="rank-out"></div>
+    </div>
   </div>
 </div>
 <div id="legend">
-  <div class="lt">凡例</div>
-  <div class="li"><div class="ll" style="width:30px;background:#0A64E6"></div>転入超過（差分がプラス）</div>
-  <div class="li"><div class="ll" style="width:30px;background:#D21414"></div>転出超過（差分がマイナス）</div>
-  <div class="li">
-    <div style="display:flex;align-items:center;gap:1px">
-      <div style="width:2px;height:5px;background:#888;border-radius:1px"></div>
-      <div style="width:4px;height:5px;background:#888;border-radius:1px"></div>
-      <div style="width:7px;height:5px;background:#888;border-radius:1px"></div>
-    </div>
-    線の太さ＝人数規模
+  <div class="lt" onclick="toggleLeg()">
+    <span>凡例</span>
+    <span class="chev" id="leg-chevron">▲</span>
   </div>
-  <div class="li"><div class="ld" style="background:#4FC3F7"></div>転入粒子</div>
-  <div class="li"><div class="ld" style="background:#FF8A65"></div>転出粒子</div>
-  <div class="li"><div class="ld" style="background:#FFD700;border:1px solid #888"></div>選択中の都道府県</div>
-  <div style="margin-top:8px;padding-top:8px;border-top:1px solid #eee;font-size:10px;color:#aaa">
-    出典: 総務省住民基本台帳人口移動報告<br>
-    e-Stat API / 国土地理院地図タイル
+  <div id="leg-body">
+    <div class="li"><div class="ll" style="width:30px;background:#0A64E6"></div>転入超過（差分がプラス）</div>
+    <div class="li"><div class="ll" style="width:30px;background:#D21414"></div>転出超過（差分がマイナス）</div>
+    <div class="li">
+      <div style="display:flex;align-items:center;gap:1px">
+        <div style="width:2px;height:5px;background:#888;border-radius:1px"></div>
+        <div style="width:4px;height:5px;background:#888;border-radius:1px"></div>
+        <div style="width:7px;height:5px;background:#888;border-radius:1px"></div>
+      </div>
+      線の太さ＝人数規模
+    </div>
+    <div class="li"><div class="ld" style="background:#4FC3F7"></div>転入粒子</div>
+    <div class="li"><div class="ld" style="background:#FF8A65"></div>転出粒子</div>
+    <div class="li"><div class="ld" style="background:#FFD700;border:1px solid #888"></div>選択中の都道府県</div>
+    <div style="margin-top:8px;padding-top:8px;border-top:1px solid #eee;font-size:10px;color:#aaa">
+      出典: 総務省住民基本台帳人口移動報告<br>
+      e-Stat API / 国土地理院地図タイル
+    </div>
   </div>
 </div>
 <div id="tip"></div>
@@ -528,6 +541,11 @@ select#ps:focus{border-color:#5b80c4}
     </button>
   </div>
 </div>
+<script>
+function toggleCtrl(){var b=document.getElementById('ctrl-body'),c=document.getElementById('ctrl-chevron'),o=b.style.display!=='none';b.style.display=o?'none':'';c.textContent=o?'▼':'▲';}
+function toggleLeg(){var b=document.getElementById('leg-body'),c=document.getElementById('leg-chevron'),o=b.style.display!=='none';b.style.display=o?'none':'';c.textContent=o?'▼':'▲';}
+if(window.innerWidth<640){document.getElementById('ctrl-body').style.display='none';document.getElementById('ctrl-chevron').textContent='▼';document.getElementById('leg-body').style.display='none';document.getElementById('leg-chevron').textContent='▼';}
+</script>
 <script>
 const PI={PREF_INFO_JSON};
 const FD=FLOW_DATA_JSON;
