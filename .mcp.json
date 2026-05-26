@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "estat": {
+      "command": "/Users/tatsurohatori/Documents/遊び/venv/bin/python",
+      "args": [
+        "/Users/tatsurohatori/Documents/遊び/server.py"
+      ],
+      "env": {}
+    }
+  }
+}
