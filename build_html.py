@@ -508,6 +508,26 @@ select#ps:focus{border-color:#5b80c4}
   </div>
 </div>
 <div id="tip"></div>
+
+<div id="modal-overlay" style="position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(3px)">
+  <div style="background:#fff;border-radius:14px;padding:32px 36px;max-width:420px;width:90%;box-shadow:0 8px 32px rgba(0,0,0,.18);line-height:1.7">
+    <div style="font-size:17px;font-weight:bold;color:#1a1a2e;margin-bottom:14px">都道府県間 転出・転入フローマップ</div>
+    <div style="font-size:13px;color:#444;margin-bottom:18px">
+      本アプリは<strong>デモ目的</strong>で作成されています。<br>
+      データは <a href="https://www.e-stat.go.jp/" target="_blank" style="color:#0A64E6">e-Stat（政府統計の総合窓口）</a> の
+      住民基本台帳人口移動報告（2020〜2023年）を使用していますが、
+      データの加工・集計における正確性は保証しません。
+      意思決定等への利用はお控えください。
+    </div>
+    <div style="font-size:12px;color:#888;margin-bottom:22px;padding-top:14px;border-top:1px solid #eee">
+      Powered by <a href="https://www.pons-llc.com/" target="_blank" style="color:#1a1a2e;font-weight:bold">合同会社 Pons</a>
+    </div>
+    <button onclick="document.getElementById('modal-overlay').style.display='none'"
+      style="width:100%;padding:10px;background:#1a1a2e;color:#fff;border:none;border-radius:8px;font-size:14px;cursor:pointer;font-weight:bold">
+      同意して使用する
+    </button>
+  </div>
+</div>
 <script>
 const PI={PREF_INFO_JSON};
 const FD=FLOW_DATA_JSON;
