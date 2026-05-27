@@ -137,7 +137,7 @@ function fmt(n) { return n.toLocaleString('ja-JP')+'人'; }
 // DATA AGGREGATION  — net flows per other prefecture
 // ============================================================
 function getFlows() {
-  const years = selYear==='all' ? ['2020','2021','2022','2023'] : [selYear];
+  const years = selYear==='all' ? ['2020','2021','2022','2023','2024','2025'] : [selYear];
   const ins = {}, outs = {};
   for (const yr of years) {
     for (const f of (FD[yr]||[])) {
@@ -217,7 +217,6 @@ function drawFrame() {
   if (!activeFlows.length) return;
 
   const maxN = Math.max(...activeFlows.map(f=>Math.abs(f.net)));
-
   // 1. Lines — one arrow per other-pref showing net direction
   for (const f of activeFlows) {
     if (!PI[f.other]||!PI[selPref]) continue;
@@ -340,7 +339,7 @@ document.getElementById('map').addEventListener('mousemove', e => {
   if (best) {
     const f = best;
     const nm = PI[f.other].name;
-    const yrLabel = selYear==='all'?'2020-2023累計':selYear+'年';
+    const yrLabel = selYear==='all'?'2020-2025累計':selYear+'年';
     const isIn = f.net>0;
     const dir = isIn ? `${nm} → ${PI[selPref].name}` : `${PI[selPref].name} → ${nm}`;
     const col = isIn?'#4FC3F7':'#FF8A65';
@@ -472,6 +471,8 @@ select#ps:focus{border-color:#5b80c4}
         <button class="yb" data-y="2021">2021</button>
         <button class="yb" data-y="2022">2022</button>
         <button class="yb" data-y="2023">2023</button>
+        <button class="yb" data-y="2024">2024</button>
+        <button class="yb" data-y="2025">2025</button>
       </div>
     </div>
     <div class="cg">
@@ -528,7 +529,7 @@ select#ps:focus{border-color:#5b80c4}
     <div style="font-size:13px;color:#444;margin-bottom:18px">
       本アプリは<strong>デモ目的</strong>で作成されています。<br>
       データは <a href="https://www.e-stat.go.jp/" target="_blank" style="color:#0A64E6">e-Stat（政府統計の総合窓口）</a> の
-      住民基本台帳人口移動報告（2020〜2023年）を使用していますが、
+      住民基本台帳人口移動報告（2020〜2025年）を使用していますが、
       データの加工・集計における正確性は保証しません。
       意思決定等への利用はお控えください。
     </div>
